@@ -132,6 +132,13 @@ export default function App() {
     showToast('Pothole marked as reopened')
   }, [showToast])
 
+  const reportToCouncil = useCallback((id) => {
+    setPotholes(prev => prev.map(p =>
+      p.id !== id ? p : { ...p, status: 'reported-to-council' },
+    ))
+    showToast('Status updated — opening FixMyStreet...')
+  }, [showToast])
+
   const handleMapClick = useCallback((latlng) => {
     if (pickingLocation) {
       setReportLocation({ lat: latlng.lat, lng: latlng.lng })
@@ -194,6 +201,7 @@ export default function App() {
             onConfirm={confirmPothole}
             onMarkFixed={markFixed}
             onReopen={reopenPothole}
+            onReportToCouncil={reportToCouncil}
             userId={user.id}
           />
 

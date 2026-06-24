@@ -513,9 +513,10 @@
 .btn:active { transform: scale(0.98); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.btn--primary { background: var(--primary); color: white; }
-.btn--success { background: var(--success); color: white; }
-.btn--warn    { background: var(--warn); color: white; }
+.btn--primary  { background: var(--primary); color: white; }
+.btn--success  { background: var(--success); color: white; }
+.btn--warn     { background: var(--warn); color: white; }
+.btn--council  { background: var(--purple); color: white; }
 .btn--outline {
   background: white;
   color: var(--text);

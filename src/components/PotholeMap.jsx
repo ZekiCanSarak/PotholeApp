@@ -65,6 +65,7 @@ export default function PotholeMap({
   onConfirm,
   onMarkFixed,
   onReopen,
+  onReportToCouncil,
   userId,
 }) {
   return (
@@ -90,6 +91,7 @@ export default function PotholeMap({
               onConfirm={onConfirm}
               onMarkFixed={onMarkFixed}
               onReopen={onReopen}
+              onReportToCouncil={onReportToCouncil}
             />
           </Popup>
         </Marker>

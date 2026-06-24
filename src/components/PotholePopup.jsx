@@ -1,4 +1,4 @@
-import { ThumbsUp, Wrench, RotateCcw, Calendar, MapPin, AlertTriangle, Car } from 'lucide-react'
+import { ThumbsUp, Wrench, RotateCcw, Calendar, MapPin, AlertTriangle, Car, Send } from 'lucide-react'
 
 const SEVERITY_COLOR = { low: '#f59e0b', medium: '#f97316', dangerous: '#ef4444' }
 const STATUS_COLOR = {
@@ -18,11 +18,18 @@ function fmtStatus(s) {
   return s.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-export default function PotholePopup({ pothole, userId, onConfirm, onMarkFixed, onReopen }) {
+export default function PotholePopup({ pothole, userId, onConfirm, onMarkFixed, onReopen, onReportToCouncil }) {
   const alreadyConfirmed = pothole.confirmedBy.includes(userId)
   const isMyReport = pothole.reportedBy === userId
   const canConfirm = !alreadyConfirmed && !isMyReport && pothole.status !== 'fixed'
   const isFixed = pothole.status === 'fixed'
+  const canReportToCouncil = ['new', 'verified', 'reopened'].includes(pothole.status)
+
+  function handleReportToCouncil() {
+    onReportToCouncil(pothole.id)
+    const url = `https://www.fixmystreet.com/report/new?latitude=${pothole.lat}&longitude=${pothole.lng}`
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <div className="popup-inner">
@@ -68,6 +75,11 @@ export default function PotholePopup({ pothole, userId, onConfirm, onMarkFixed, 
         )}
         {alreadyConfirmed && !isFixed && (
           <span className="already-confirmed">You confirmed this</span>
+        )}
+        {canReportToCouncil && (
+          <button className="btn btn--council btn--sm" onClick={handleReportToCouncil}>
+            <Send size={13} /> Report to Council
+          </button>
         )}
         {!isFixed && (
           <button className="btn btn--success btn--sm" onClick={() => onMarkFixed(pothole.id)}>
